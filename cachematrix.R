@@ -1,36 +1,31 @@
+#This script is for Class 2, week 3, Assignment 2: Lexical Scoping. The assignment is called: "Caching the Inverse of a Matrix"
 
-## This script is for Class 2, week 3, Assignment 2: Lexical Scoping. The assignment is called: "Caching the Inverse of a Matrix"
 
-## This function is used to create a matrix for caching the inverse
-
+#This function is used to create a matrix for caching the inverse
 makeCacheMatrix <- function(x = matrix()) {
-  
-  inv <- NULL
+  m <- NULL
   set <- function(y) {
     x <<- y
-    inv <<- NULL
+    m <<- NULL
   }
   get <- function() x
-  setinverse <- function(inverse) inv <<- inverse
-  getinverse <- function() inv
+  setinverse <- function(solve) m <<- solve
+  getinverse <- function() m
   list(set = set, get = get,
        setinverse = setinverse,
        getinverse = getinverse)
 }
-  
-}
 
+#This is the function for computing the inverse of the matrixed returned by "makeCacheMatrix"
 
-## function for computing the inverse of the matrixed returned by "makeCacheMatrix"
-cacheSolve <- function(x, ...) {
-  inv <- x$getinverse()
-  if(!is.null(inv)) {
+cachesolve <- function(x, ...) {
+  m <- x$getinverse()
+  if(!is.null(m)) {
     message("getting cached data")
-    return(inv)
+    return(m)
   }
   data <- x$get()
-  inv <- inverse(data, ...)
-  x$setinverse(inv)
-  inv
-}
+  m <- solve(data, ...)
+  x$setinverse(m)
+  m
 }
